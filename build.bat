@@ -1,8 +1,8 @@
 @echo off
 REM Ensambla y enlaza Mastermind. Uso: escribir BUILD en la raiz del proyecto
-tasm /zi /m2 /isrc src\mm.asm, bin\mm.obj
+tasm /zi /m2 /isrc src\mm.asm,bin\
 if errorlevel 1 goto error
-tlink /v bin\mm.obj, bin\mm.exe
+tlink /v bin\mm.obj,bin\mm.exe
 if errorlevel 1 goto error
 echo === OK: bin\mm.exe ===
 goto fin
