@@ -40,7 +40,8 @@
 - - ES apunta a la VRAM, ES es Extra segment y es un segmento libre que uno puede utilizar con lo que sea, esta vez lo utilizamos para apuntar a la zona de la vram y lo que yo escriba en esa zona se pintara en la pantalla porque la pantalla lee esa memoria.
 - - aprendi sobre la pila (push, pop) y como se pueden agregar valores de los registros y luego obtenerlos(LIFO)
 - - aprendi sobre "int 10h" se comporta como un peticion donde ah es un endpoint y los demas registros son parametros dependiendo del servicio por ejemplo:  mov ax, 0013h  (ah = 00 y 00 significa o comanda a fijar un modo, al = 13h seria cual modo se debe fijar que en este caso es el 13h)
-- - la VRAM y el offset. la vram es una sola fila larga de 64 000 bytes y para pintar un pixel en la fila 35 debo de multiplicar por 320 porque cada 320 bytes avanzo a la siguiente fila o sea el eje y, una vez en una fila sumo x y ese es el punto en donde se dibuja o sea offset = y * 320 + x 
+- - la VRAM y el offset. la vram es una sola fila larga de 64 000 bytes y para pintar un pixel en la fila 35 debo de multiplicar por 320 porque cada 320 bytes avanzo a la siguiente fila o sea el eje y, una vez en una fila sumo x y ese es el punto en donde se dibuja o sea offset = y * 320 + x.
+- stosb instruccion que hace dos cosas, escribir AL en ES:[DI] y aumentar DI, asi esta hecho en 8086 las instrucciones individuales para aumentar, escribir debieron de repetirse mucho como para crear una instruccion que haga las dos cosas
 - **Errores / dificultades:**
   | Síntoma (qué vi) | Causa (por qué pasó) | Solución |
   |---|---|---|

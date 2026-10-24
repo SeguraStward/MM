@@ -19,9 +19,12 @@ INICIO PROC FAR
         mov ds, ax
         call IniciarVideo
 
-        ; prueba
-        mov di, 24*ANCHO_PANT + 30
-        mov byte ptr es:[di], 15
+        ; prueba 
+        cld
+        mov di, 20 * ANCHO_PANT 
+        mov cx, ANCHO_PANT
+        mov al, 4  
+        rep stosb
 
         mov ah, 00h ; esperar una tecla para ver el resultado
         int 16h
