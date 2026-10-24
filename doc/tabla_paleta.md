@@ -1,0 +1,15 @@
+| Índice | Carácter | R | G | B | Uso |
+|---|---|---|---|---|---|
+| 16 | `K` | 7 | 7 | 7 | contorno |
+| 17 | `W` | 63 | 63 | 63 | blanco_brillo |
+| 18 | `C` | 19 | 42 | 61 | azul_claro_bd |
+| 19 | `c` | 6 | 28 | 48 | azul_oscuro_bd |
+| 20 | `g` | 33 | 35 | 37 | gris_lineas_csv |
+| 21 | `S` | 52 | 58 | 63 | celeste_nube |
+| 22 | `O` | 63 | 31 | 5 | naranja_engranaje |
+| 23 | `Y` | 63 | 49 | 6 | amarillo |
+| 24 | `G` | 16 | 48 | 21 | verde_ok |
+| 25 | `P` | 37 | 29 | 62 | morado_json |
+| 26 | `A` | 62 | 44 | 1 | ambar_rayo |
+
+Orden de la hoja de sprites: F_NUBE, F_ENGR, F_EMBUDO, F_FLECHA, F_JSON, F_RAYO, F_BD, F_CSV, IND_TORO, IND_VACA, PATO_1, PATO_2

@@ -47,5 +47,5 @@
   |---|---|---|
   |  |  |  |
 - **Uso de IA:** 
-- **Commit:** `tipo(ámbito): resumen`
-- **Horas:**
+- **Commit:**  
+- **Horas:** 4h
