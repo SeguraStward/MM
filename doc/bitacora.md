@@ -31,12 +31,19 @@
 ---
   
 ### 2026-10-23 — Fase 1: esqueleto y modo 13h
-- **Qué hice:** Cree macros.inc y en ella la macro para salir de el DOS, cuando utilice la macro en el programa ese nombre sera reemplazado por las instrucciones para salir.
-- **Qué aprendí:** Diferencia entre Macro y PROC
+- **Qué hice:** 
+- - Cree macros.inc y en ella la macro para salir de el DOS, cuando utilice la macro en el programa ese nombre sera reemplazado por las instrucciones para salir.
+- - Cree dos PROC que son como funciones, una para Iniciar el modo video y otra para salir del modo video
+- **Qué aprendí:** 
+- - Diferencia entre Macro y PROC
+- - Registros de segmento. DS apunta a una zona en donde se encuentran los datos que utilizamos en la pantalla por eso todos los programas empienzan con " mov ax, @DATA  mov ds, ax" y no se puede hacer mov ds, @DATA por decision de diseno.
+- - ES apunta a la VRAM, ES es Extra segment y es un segmento libre que uno puede utilizar con lo que sea, esta vez lo utilizamos para apuntar a la zona de la vram y lo que yo escriba en esa zona se pintara en la pantalla porque la pantalla lee esa memoria.
+- - aprendi sobre la pila (push, pop) y como se pueden agregar valores de los registros y luego obtenerlos(LIFO)
+- - aprendi sobre "int 10h" se comporta como un peticion donde ah es un endpoint y los demas registros son parametros dependiendo del servicio por ejemplo:  mov ax, 0013h  (ah = 00 y 00 significa o comanda a fijar un modo, al = 13h seria cual modo se debe fijar que en este caso es el 13h)
 - **Errores / dificultades:**
   | Síntoma (qué vi) | Causa (por qué pasó) | Solución |
   |---|---|---|
   |  |  |  |
-- **Uso de IA:** (qué pregunté y qué me explicó; va a la declaración de IA)
+- **Uso de IA:** 
 - **Commit:** `tipo(ámbito): resumen`
 - **Horas:**
