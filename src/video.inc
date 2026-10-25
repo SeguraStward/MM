@@ -37,3 +37,36 @@ RestaurarVideo PROC NEAR
         pop ax
         ret
 RestaurarVideo ENDP
+
+
+;CargarPaleta
+;Proposito: redefinir colores del DAC del VGA (RG-07)
+;Recibe: DS:SI = tabla de bytes R, G, B (0..63)
+;        AL = primer indice a redefinir
+;        CX = cantidad de colores
+; Devuelve: nada
+; Destruye: nada
+;
+
+CargarPaleta PROC NEAR
+        push ax
+        push cx
+        push dx
+        push si
+        cld
+        mov dx, 3C8h  ; indicarle al DAC desde que indice empezar
+        out dx, al 
+        mov dx, 3C9h  ; 3C9h: puerto de datos del DAC
+        mov ax, cx    ; cada color son 3 bytes -> CX  = CX*3
+        shl cx, 1
+        add cx, ax
+CP_Sig: lodsb   ; siguiente componente R, G o B
+
+        out  dx, al  ;el DAC avanza solo al siguiente
+        loop CP_Sig
+        pop si
+        pop dx
+        pop cx
+        pop ax
+        ret
+CargarPaleta ENDP
