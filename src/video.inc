@@ -70,3 +70,60 @@ CP_Sig: lodsb   ; siguiente componente R, G o B
         pop ax
         ret
 CargarPaleta ENDP
+
+
+;DibujarSprite
+;Proposito: copiar un sprite a la pantalla saltando el color 0 
+;REcibe: pila (en este orden) x,y, ancho, alto, ptrSprite
+;  ES = 0A000h
+; Devuelve: nada 
+; Destruye: nada
+
+
+DibujarSprite PROC NEAR
+        push bp
+        mov bp, sp  ; BP = Ancla para leer los parametros
+        push ax
+        push bx
+        push cx
+        push dx
+        push si
+        push di
+        
+        cld
+
+        mov ax, [bp+10] ; y
+        mov bx, ANCHO_PANT
+        mul bx          ; AX = y* 320 (mul tambien pisa dx)
+        add ax, [bp+12] ; + x
+        mov di, ax      ; DI = esquina superior izquierda en vram
+        mov si, [bp+4]  ; SI = primer byte del sprite
+        mov dx, [bp+6]  ; DX = filas que faltan
+
+DS_Fila:
+        mov cx, [bp+8]  ; CX = pixeles de esta fila
+        push di         ; recordar donde empieza fila
+DS_Pix:
+        lodsb           ; AL = color de pixel, SI++
+        or al, al       ; color 0 = transparente, no se pinta
+        jz DS_Salta
+        mov es:[di], al
+DS_Salta:
+        inc di
+        loop DS_pix
+
+        pop di          ; volver al inicio de la fila
+        add di, ANCHO_PANT  ; bajar una fila en pantalla
+        dec dx
+        jnz DS_Fila
+
+        pop di
+        pop si
+        pop dx
+        pop cx
+        pop bx
+        pop ax
+        pop bp
+        ret 10          ; 5 parametros X 2 bytes
+
+DibujarSprite ENDP

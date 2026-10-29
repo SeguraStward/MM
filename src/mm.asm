@@ -12,6 +12,8 @@ ANCHO_PANT EQU 320 ; pixeles por fila en modo 13h
 .DATA
     modoOriginal DB ?  ; modo de video del DOS
         INCLUDE paleta.inc
+        INCLUDE sprites.inc
+
 
 .CODE
 INICIO PROC FAR
@@ -24,21 +26,17 @@ INICIO PROC FAR
         mov cx, PAL_CANT
         call CargarPaleta
 
-
-
-        ; prueba 
-        cld
-        mov di, 20 * ANCHO_PANT 
-        mov cx, ANCHO_PANT
-        mov al, 22  
-        rep stosb
-
-        cld
-        mov di, 22 * ANCHO_PANT 
-        mov cx, ANCHO_PANT
-        mov al, 26  
-        rep stosb
-
+        ;dibujarsprites
+        mov ax, 150     ;x
+        push ax
+        mov ax, 90      ;y
+        push ax
+        mov ax, 16      ;ancho
+        push ax
+        push ax         ;alto (tambien 16)
+        mov ax, OFFSET PATO_1
+        push ax
+        call DibujarSprite
 
 
         mov ah, 00h ; esperar una tecla para ver el resultado
