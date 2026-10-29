@@ -127,3 +127,49 @@ DS_Salta:
         ret 10          ; 5 parametros X 2 bytes
 
 DibujarSprite ENDP
+
+
+
+;RellenarRect
+;Proposito: pintar un rectangulo con un color
+;Recibe: pila( en este orden) x, y, ancho, alto, color
+;       Es= 0A000h
+;Devuelve:nada
+;Destruye: nada
+
+RellenarRect PROC NEAR
+        push bp
+        mov bp, sp
+        push ax
+        push bx
+        push cx
+        push dx
+        push di
+
+        cld
+
+        mov ax, [bp+10] ; y
+        mov bx, ANCHO_PANT
+        mul bx  ; AX = y *320 (pisa dx)
+        add ax, [bp+12]     ; + x
+        mov di, ax          ; DI = esquina superior izquierda
+        mov dx, [bp+6]      ; DX = filas que faltan
+        mov al, [bp+4]      ; AL = color (stosb escribe AL)
+
+RR_Fila:
+        mov cx, [bp+8]      ; CX = ancho
+        push di             ; recordar inicio de la fila
+        rep stosb           ; pinta la fila completa de un golpe
+        pop di
+        add di, ANCHO_PANT  ; bajar una fila
+        dec dx
+        jnz RR_Fila
+
+        pop di
+        pop dx
+        pop cx
+        pop bx
+        pop ax
+        pop bp
+        ret 10              ; 5 parametros x 2 bytes
+RellenarRect ENDP

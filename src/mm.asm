@@ -36,6 +36,19 @@ INICIO PROC FAR
         push ax         ;alto (tambien 16)
         mov ax, OFFSET PATO_1
         push ax
+
+                ;rectangulo de fondo
+        mov ax, 134     ;x
+        push ax
+        mov ax, 74      ;y
+        push ax
+        mov ax, 48      ;ancho
+        push ax
+        push ax         ;alto (tambien 48)
+        mov ax, 25      ;color (morado P de la paleta)
+        push ax
+        call RellenarRect
+
         call DibujarSprite
 
 
