@@ -111,6 +111,10 @@ PM_Tecla:
         call LeerTecla
         cmp al, 0Dh             ; ENTER: elegir la opcion
         je PM_Enter
+        cmp al, 'p'             ; P activa/desactiva el modo prueba
+        je PM_Prueba
+        cmp al, 'P'
+        je PM_Prueba
         cmp al, 0               ; si no es flecha, se ignora
         jne PM_Tecla
         cmp ah, 48h             ; flecha arriba
@@ -128,6 +132,18 @@ PM_Abajo:
         je PM_Tecla
         inc opcSel
         jmp PM_Dibujar
+PM_Prueba:
+        xor modoPrueba, 1       ; 0 -> 1, 1 -> 0
+        mov si, OFFSET txtModoOff
+        cmp modoPrueba, 1
+        jne PM_Aviso
+        mov si, OFFSET txtModoOn
+PM_Aviso:
+        mov dh, 21
+        mov dl, 14
+        mov bl, COL_TITULO
+        call EscribirTexto
+        jmp PM_Tecla
 
 PM_Enter:
         mov bl, opcSel          ; estado = destinos[opcSel]
