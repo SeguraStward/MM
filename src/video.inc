@@ -173,3 +173,31 @@ RR_Fila:
         pop bp
         ret 10              ; 5 parametros x 2 bytes
 RellenarRect ENDP
+
+
+;EscribirTexto
+;Proposito: escribir una cadena terminada en 0 en la cuadricula de texto
+;Recibe: DS:SI = cadena (termina en 0)
+;        DH = fila (0..24), DL = columna (0..39)
+;        BL = indice de color
+;Devuelve: nada
+;Destruye: nada
+
+EscribirTexto PROC NEAR
+        push ax
+        push bx
+        push si
+        mov bh, 0           ; pagina 0
+        mov ah, 02h         ; mover el cursor a (DH, DL)
+        int 10h
+ET_Sig: lodsb               ; siguiente letra
+        or al, al           ; el 0 marca el fin de la cadena
+        jz ET_Fin
+        mov ah, 0Eh         ; escribe AL con color BL y avanza el cursor
+        int 10h
+        jmp ET_Sig
+ET_Fin: pop si
+        pop bx
+        pop ax
+        ret
+EscribirTexto ENDP

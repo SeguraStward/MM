@@ -11,6 +11,8 @@ ANCHO_PANT EQU 320 ; pixeles por fila en modo 13h
 
 .DATA
     modoOriginal DB ?  ; modo de video del DOS
+    txtTitulo DB 'MASTERMIND: DATA PIPELINE', 0
+
         INCLUDE paleta.inc
         INCLUDE sprites.inc
 
@@ -26,31 +28,26 @@ INICIO PROC FAR
         mov cx, PAL_CANT
         call CargarPaleta
 
-        ;dibujarsprites
-        mov ax, 150     ;x
-        push ax
-        mov ax, 90      ;y
-        push ax
-        mov ax, 16      ;ancho
-        push ax
-        push ax         ;alto (tambien 16)
-        mov ax, OFFSET PATO_1
-        push ax
+                ;titulo
+        mov si, OFFSET txtTitulo
+        mov dh, 2           ; fila 2
+        mov dl, 7           ; columna 7
+        mov bl, 23          ; amarillo de la paleta
+        call EscribirTexto
 
-                ;rectangulo de fondo
-        mov ax, 134     ;x
-        push ax
-        mov ax, 74      ;y
-        push ax
-        mov ax, 48      ;ancho
-        push ax
-        push ax         ;alto (tambien 48)
-        mov ax, 25      ;color (morado P de la paleta)
-        push ax
-        call RellenarRect
+        ;fondo gris y las 8 fichas encima (checkpoint de la fase 2)
+        RECT 0, 80, ANCHO_PANT, 40, 20
+        DIBUJAR F_NUBE,    16, 92, 16, 16
+        DIBUJAR F_ENGR,    52, 92, 16, 16
+        DIBUJAR F_EMBUDO,  88, 92, 16, 16
+        DIBUJAR F_FLECHA, 124, 92, 16, 16
+        DIBUJAR F_JSON,   160, 92, 16, 16
+        DIBUJAR F_RAYO,   196, 92, 16, 16
+        DIBUJAR F_BD,     232, 92, 16, 16
+        DIBUJAR F_CSV,    268, 92, 16, 16
+        DIBUJAR PATO_1,   152, 150, 16, 16
 
-        call DibujarSprite
-
+ 
 
         mov ah, 00h ; esperar una tecla para ver el resultado
         int 16h
