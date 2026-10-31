@@ -84,3 +84,38 @@
 - **Uso de IA:** los bocetos de los sprites y los valores de la paleta los propuso Claude, yo los revise. Me explico OUT, los puertos y lodsb.
 - **Commit:** `feat(colores): cargar paleta de colores proppios`
 - **Horas:** 4h
+
+---
+
+### 2026-10-28 — Fase 2: DibujarSprite y RellenarRect
+- **Que hice:**
+  - DibujarSprite en video.inc, recibe x, y, ancho, alto y el puntero al sprite por la pila y salta el color 0 (transparente)
+  - RellenarRect, igual que DibujarSprite pero todos los pixeles del mismo color, cada fila con rep stosb
+  - prueba: un cuadro morado con el patito encima, alrededor del pato se ve morado y no negro, o sea la transparencia sirve
+- **Que aprendi:**
+  - los parametros se meten a la pila antes del call y adentro se leen con [bp+n], BP se queda quieto y SP no
+  - ret 10 saca los 5 parametros (5 x 2 bytes), si no la pila se desbalancea
+  - mul bx multiplica AX x BX y deja el resultado en DX:AX, por eso pisa DX
+  - OFFSET PATO_1 es la direccion del sprite, no lo que hay adentro
+  - el 8086 no tiene push con numero, hay que pasar por AX
+- **Uso de IA:** Claude me dio el codigo de DibujarSprite y RellenarRect explicado por partes, yo lo escribi, lo compile y lo probe. Me explico la pila con BP, mul, lodsb y ret 10.
+- **Commits:** `feat(video): DibujarSprite con transparencia`, `feat(video): RellenarRect con rep stosb`
+- **Horas:**
+
+---
+
+### 2026-10-31 — Fase 2: macros y texto
+- **Que hice:**
+  - macros DIBUJAR y RECT en macros.inc (RT-04), cada dibujo paso de 10 lineas de push a 1 linea
+  - EscribirTexto en video.inc, escribe una cadena terminada en 0 con INT 10h 02h (cursor) y 0Eh (letra)
+  - prueba: titulo en amarillo y las 8 fichas sobre una franja gris
+- **Que aprendi:**
+  - la macro se expande al ensamblar, por eso no puede recibir AX como parametro (la macro usa AX por dentro)
+  - en modo 13h la BIOS escribe letras en una cuadricula de 40 x 25 de 8x8 pixeles
+- **Errores / dificultades:**
+  | Sintoma | Causa | Solucion |
+  |---|---|---|
+  | illegal instruction en las lineas de DIBUJAR y RECT | use las macros en mm.asm pero no las habia escrito en macros.inc, TASM no sabia que era esa palabra | agregar DIBUJAR y RECT a macros.inc |
+- **Uso de IA:** Claude me dio el codigo de las macros y de EscribirTexto explicado, yo lo escribi y lo probe. Me ayudo a encontrar el error de illegal instruction.
+- **Commit:** `feat(video): macros Dibujar y rect, escribirtexto`
+- **Horas:**
